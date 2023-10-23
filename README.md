@@ -1,6 +1,6 @@
 ### To run the code:
-cd server
-java '\.server.java'
+- cd server 
+- java '\.server.java'
 
-cd ..
-java '\.client.java'
+- cd ..
+- java '\.client.java'
