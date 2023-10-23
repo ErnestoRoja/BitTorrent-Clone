@@ -15,7 +15,7 @@ public class Server {
         ServerSocket listener = new ServerSocket(sPort);
         int clientNum = 1;
         try {
-            while(true) {
+            while (true) {
                 new Handler(listener.accept(),clientNum).start();
                 System.out.println("Client "  + clientNum + " is connected!");
                 clientNum++;
@@ -36,65 +36,61 @@ public class Server {
         private Socket connection;
         private ObjectInputStream in;	//stream read from the socket
         private ObjectOutputStream out;    //stream write to the socket
-        private int no;		//The index number of the client
+        private int indexNum;		//The index number of the client
 
         public Handler(Socket connection, int no) {
             this.connection = connection;
-            this.no = no;
+            this.indexNum = no;
         }
 
         public void run() {
-            try{
+            try {
                 //initialize Input and Output streams
                 out = new ObjectOutputStream(connection.getOutputStream());
                 out.flush();
                 in = new ObjectInputStream(connection.getInputStream());
-                try{
-                    while(true)
-                    {
+                try {
+                    while (true) {
                         //receive the message sent from the client
                         message = (String)in.readObject();
                         //show the message to the user
-                        System.out.println("Receive message: " + message + " from client " + no);
+                        System.out.println("Receive message: " + message + " from client " + indexNum);
                         //Capitalize all letters in the message
                         MESSAGE = message.toUpperCase();
                         //send MESSAGE back to the client
                         sendMessage(MESSAGE);
                     }
                 }
-                catch(ClassNotFoundException classnot){
+                catch(ClassNotFoundException classnot) {
                     System.err.println("Data received in unknown format");
                 }
             }
-            catch(IOException ioException){
-                System.out.println("Disconnect with Client " + no);
+            catch(IOException ioException) {
+                System.out.println("Disconnect with Client " + indexNum);
             }
-            finally{
+            finally {
                 //Close connections
-                try{
+                try {
                     in.close();
                     out.close();
                     connection.close();
                 }
-                catch(IOException ioException){
-                    System.out.println("Disconnect with Client " + no);
+                catch(IOException ioException) {
+                    System.out.println("Disconnect with Client " + indexNum);
                 }
             }
         }
 
         //send a message to the output stream
-        public void sendMessage(String msg)
-        {
-            try{
+        public void sendMessage(String msg) {
+            try {
                 out.writeObject(msg);
                 out.flush();
-                System.out.println("Send message: " + msg + " to Client " + no);
+                System.out.println("Send message: " + msg + " to Client " + indexNum);
             }
-            catch(IOException ioException){
+            catch(IOException ioException) {
                 ioException.printStackTrace();
             }
         }
-
     }
-
 }
