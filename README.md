@@ -1,6 +1,5 @@
-### To run the code:
-- cd server 
-- java '\.server.java'
-
-- cd ..
-- java '\.client.java'
+### P2P File Sharing System
+Contributors:
+- Ernesto Roja
+- Robert Fontan
+- Frank Sabates
