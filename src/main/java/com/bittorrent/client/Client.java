@@ -15,9 +15,8 @@ public class Client {
 
     public void Client() {}
 
-    void run()
-    {
-        try{
+    void run() {
+        try {
             //create a socket to connect to the server
             requestSocket = new Socket("localhost", 8000);
             System.out.println("Connected to localhost in port 8000");
@@ -28,8 +27,7 @@ public class Client {
 
             //get Input from standard input
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            while(true)
-            {
+            while (true) {
                 System.out.print("Hello, please input a sentence: ");
                 //read a sentence from the standard input
                 message = bufferedReader.readLine();
@@ -44,44 +42,41 @@ public class Client {
         catch (ConnectException e) {
             System.err.println("Connection refused. You need to initiate a server first.");
         }
-        catch ( ClassNotFoundException e ) {
+        catch (ClassNotFoundException e) {
             System.err.println("Class not found");
         }
-        catch(UnknownHostException unknownHost){
+        catch(UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
         }
-        catch(IOException ioException){
+        catch(IOException ioException) {
             ioException.printStackTrace();
         }
-        finally{
+        finally {
             //Close connections
-            try{
+            try {
                 in.close();
                 out.close();
                 requestSocket.close();
             }
-            catch(IOException ioException){
+            catch(IOException ioException) {
                 ioException.printStackTrace();
             }
         }
     }
     //send a message to the output stream
-    void sendMessage(String msg)
-    {
-        try{
+    void sendMessage(String msg) {
+        try {
             //stream write the message
             out.writeObject(msg);
             out.flush();
         }
-        catch(IOException ioException){
+        catch(IOException ioException) {
             ioException.printStackTrace();
         }
     }
     //main method
-    public static void main(String args[])
-    {
+    public static void main(String[] args) {
         Client client = new Client();
         client.run();
     }
-
 }
