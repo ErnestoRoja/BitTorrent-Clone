@@ -1,4 +1,4 @@
-package main.java.com.bittorrent.client;
+package com.bittorrent.client;
 
 import java.net.*;
 import java.io.*;
