@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 import java.io.ObjectInputStream;
+//import main.java.com.bittorrent.message.MessageCreator;
+// have compile message creator first
 
 public class MessageHandler {
     
@@ -44,7 +46,7 @@ public class MessageHandler {
 
     public static void main(String[] args){
 
-        MessageCreator messageCreator = new MessageCreator();
+       // MessageCreator messageCreator = new MessageCreator();
 
      
     }
