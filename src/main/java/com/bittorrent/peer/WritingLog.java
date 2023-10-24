@@ -27,7 +27,7 @@ public class WritingLog {
     }
 
     public static void main(String[] args) {
-        String currentTimeString = getCurrentTime();
+        String currentTimeStrin g = getCurrentTime();
         System.out.println(currentTimeString);
     }
 }
