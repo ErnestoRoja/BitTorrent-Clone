@@ -1,4 +1,4 @@
-package main.java.com.bittorrent.message;
+package com.bittorrent.message;
 
 import java.io.IOException;
 import java.io.InputStream;
