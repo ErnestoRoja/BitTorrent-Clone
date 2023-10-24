@@ -12,13 +12,14 @@ public class Peer {
     public String fileName;
     public int fileSize;
     public int pieceSize;
+    public int numPieces;
 
     // Attributes from the 'PeerInfo.cfg' file
     public int peerID;
     public String hostName;
     public int listeningPort;
     public boolean hasFile;
-
+    public byte[] file;
     public Peer() {
 
     }
@@ -55,6 +56,9 @@ public class Peer {
         System.out.println("FileSize " + this.fileSize);
         this.pieceSize = Integer.parseInt(prop.getProperty("PieceSize"));
         System.out.println("PieceSize " + this.pieceSize);
+        //Here we calculate the number of pieces in the file
+        double result = (double)this.fileSize/this.pieceSize;
+        this.numPieces = (int)Math.ceil(result);
     }
 
     public void parsePeerInfoConfig() {
@@ -98,6 +102,46 @@ public class Peer {
         }
     }
 
+    public void peerDirectory() {
+        FileOutputStream fileOutputStream = null;
+
+        //creates a subDirectory for the peer with it's peerID
+        String directoryPath = "/peer_" + peerID;
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                System.out.println("Directory created: " + directoryPath);
+            } else {
+                System.out.println("Failed to create directory: " + directoryPath);
+                return;
+            }
+        }
+        try {
+            File filePath = new File(directory, fileName);
+            filePath.createNewFile();
+            fileOutputStream = new FileOutputStream(filePath);
+
+            for (int i = 0; i < numPieces; i++) {
+                fileOutputStream.write(file[i]);
+            }
+        } catch (FileNotFoundException fileNotFound) {
+            System.out.println("FileNotFoundException caught file is either a directory or does not exist.");
+            fileNotFound.printStackTrace();
+        } catch (IOException ioException) {
+            System.out.println("IOException caught from function createNewFile.");
+            ioException.printStackTrace();
+        }
+
+        if (fileOutputStream != null) {
+            try {
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException ioException) {
+                System.out.println("IOException caught from function flush or close");
+                ioException.printStackTrace();
+            }
+        }
+    }
     public static void main (String[] args) {
         Peer test = new Peer();
         test.parseCommonConfig();
