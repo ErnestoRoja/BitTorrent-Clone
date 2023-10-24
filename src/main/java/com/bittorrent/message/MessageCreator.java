@@ -135,14 +135,14 @@ public class MessageCreator {
 
     // have message type 6
     // implement after piece type is done
-    public static byte[] haveMessage() throw IOException {
+    public static byte[] haveMessage() throws IOException {
         
         return null;
     }
 
     // type 7
     // payload which consists of 4 byte piece index field and content
-    public static byte[] pieceMessage() throw IOException {
+    public static byte[] pieceMessage() throws IOException {
 
         return null;
 
