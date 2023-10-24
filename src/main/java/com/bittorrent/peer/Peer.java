@@ -106,7 +106,7 @@ public class Peer {
         FileOutputStream fileOutputStream = null;
 
         //creates a subDirectory for the peer with it's peerID
-        String directoryPath = "/peer_" + peerID;
+        String directoryPath = "/peer_" + Integer.toString(peerID);
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             if (directory.mkdirs()) {
