@@ -9,7 +9,8 @@ import java.io.ObjectInputStream;
 // have compile message creator first
 
 public class MessageHandler {
-    
+
+    // Still needs further implementation.
     public static byte[] readMessage(ObjectInputStream inputStream) throws IOException {
         byte[] lengthBytes = new byte[4];
         
@@ -23,10 +24,12 @@ public class MessageHandler {
         byte[] payload = new byte[messageLength - 5];
         inputStream.read(payload);
 
-        // depending on the payload 
-        // for example, if it is a bitfield message, then the payload will be the bitfield
-        // send the rest of the message to the bitfield handler
-        // if it is a request message, then the payload will be the index of the piece requested
+        /*
+         depending on the payload
+         for example, if it is a bitfield message, then the payload will be the bitfield
+         send the rest of the message to the bitfield handler
+         if it is a request message, then the payload will be the index of the piece requested
+        */
 
         // This tests the content of the message 
         byte[] message = new byte[messageLength];

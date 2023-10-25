@@ -25,14 +25,15 @@ public class MessageCreator {
         // or byte[]
     }
 
-    // maybe make a message determiner ??
+    /*
+     maybe make a message determiner ??
+     making the other messages
+     4 byte message length, 1 byte message type, variable length message (payload)
+     choke 0, unchoke 1, interested 2, not interested 3, they all follow the same structure
+     have no payload data
+     only 5 bytes
+    */
 
-    // making the other messages 
-    // 4 byte message length, 1 byte message type, variable length message (payload)
-
-    // choke 0, unchoke 1, interested 2, not interested 3, they all follow the same structure
-    // have no payload data 
-    // only 5 bytes
     public static byte[] chokeMessage() throws IOException {
         byte[] message = new byte[5];
 
@@ -69,7 +70,6 @@ public class MessageCreator {
         System.arraycopy(messageLengthBuffer.array(), 0, message, 0, 4);
         System.arraycopy(messageType, 0, message, 4, 1);
 
-        
         return message;
     }
 
@@ -89,7 +89,6 @@ public class MessageCreator {
         System.arraycopy(messageLengthBuffer.array(), 0, message, 0, 4);
         System.arraycopy(messageType, 0, message, 4, 1);
 
-        
         return message;
     }
 
@@ -119,8 +118,6 @@ public class MessageCreator {
         byte[] messageType = new byte[1];
         byte[] messagePayload = bitfieldMessage.toByteArray();
 
-
-
         System.arraycopy(messageLength, 0, message, 0, 4);
         System.arraycopy(messageType, 0, message, 4, 1);
         System.arraycopy(messagePayload, 0, message, message.length, 0);
@@ -142,9 +139,6 @@ public class MessageCreator {
 
         return null;
     }
-
-
-
 
     public static void main(String[] args){
         MessageCreator messageCreator = new MessageCreator();
