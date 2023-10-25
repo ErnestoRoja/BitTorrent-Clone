@@ -7,7 +7,7 @@ Before compiling this Maven project, ensure that you have the following prerequi
 * IntelliJ IDEA (optional): This project was created in IntelliJ, therefore, some features might require its use.
 
 ## Instructions
-1. Clone the repository: git clone <repository-url>
+1. Clone the repository: git clone 'repository-url'
 2. Open IntelliJ IDEA
 3. Click on 'File -> Open' in IntelliJ IDEA
 4. Navigate to the project's root directory 'BitTorrent' and select it.
