@@ -28,6 +28,7 @@ public class WritingLog {
         }
     }
 
+    // Provides the current time of execution.
     public static String getCurrentTime(){
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' HH:mm:ss");
