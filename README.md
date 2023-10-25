@@ -11,7 +11,9 @@ Before compiling this Maven project, ensure that you have the following prerequi
 2. Open IntelliJ IDEA
 3. Click on 'File -> Open' in IntelliJ IDEA
 4. Navigate to the project's root directory 'BitTorrent' and select it.
-5. IntelliJ IDEA should automatically recognize it as a Maven project and open it.
+5. IntelliJ should automatically recognize it as a Maven project and open it.
+6. Select an appropriate SDK version (20+) for IntelliJ to build the project.
+7. Load the build script for the IDEA to recognize the code (IntelliJ should provide the option with a popup).
 
 **Note: The use of Maven is REQUIRED for proper compilation/functionality since many of the methods require 
 input files located in the Maven folder 'resources' within './BitTorrent/main/resources'. If this directory is not present, unwanted behavior might occur.
