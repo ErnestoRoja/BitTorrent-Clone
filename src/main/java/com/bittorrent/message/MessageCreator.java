@@ -1,4 +1,4 @@
-package main.java.com.bittorrent.message;
+package com.bittorrent.message;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -136,11 +136,7 @@ public class MessageCreator {
     // have message type 6
     // implement after piece type is done
     public static byte[] haveMessage() throws IOException {
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> c392cef401e365d470be92e1c0fc9ccab5c3d82e
         return null;
     }
 
