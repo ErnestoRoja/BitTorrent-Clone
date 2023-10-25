@@ -15,8 +15,6 @@ public class MessageCreator {
         System.arraycopy(header, 0, handshakeMessage, 0, header.length);
         byte[] peerIdBytes = String.format("%04d", peerId).getBytes();
         System.arraycopy(peerIdBytes, 0, handshakeMessage, header.length, 4);
-        
-
 
         //System.out.println("Header: " + new String(header));
         //System.out.println("Handshake message after header: " + new String(handshakeMessage));
@@ -24,9 +22,7 @@ public class MessageCreator {
         //System.out.println("Handshake message after peer ID: " + new String(handshakeMessage));
 
         return handshakeMessage; // should be output stream
-        // or byte[] 
-
-
+        // or byte[]
     }
 
     // maybe make a message determiner ??

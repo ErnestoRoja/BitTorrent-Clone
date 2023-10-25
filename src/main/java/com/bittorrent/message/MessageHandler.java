@@ -23,14 +23,11 @@ public class MessageHandler {
         byte[] payload = new byte[messageLength - 5];
         inputStream.read(payload);
 
-        
-
         // depending on the payload 
         // for example, if it is a bitfield message, then the payload will be the bitfield
         // send the rest of the message to the bitfield handler
         // if it is a request message, then the payload will be the index of the piece requested
-    
-        
+
         // This tests the content of the message 
         byte[] message = new byte[messageLength];
         System.arraycopy(lengthBytes, 0, message, 0, 4);
@@ -40,14 +37,7 @@ public class MessageHandler {
         return message;
     }
 
-
-    
-
-
     public static void main(String[] args){
 
-       // MessageCreator messageCreator = new MessageCreator();
-
-     
     }
 }
