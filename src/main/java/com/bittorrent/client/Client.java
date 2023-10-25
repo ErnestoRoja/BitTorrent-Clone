@@ -1,5 +1,6 @@
 package com.bittorrent.client;
 
+import com.bittorrent.peer.Peer;
 import java.net.*;
 import java.io.*;
 import java.nio.*;
@@ -12,8 +13,14 @@ public class Client {
     ObjectInputStream in;          //stream read from the socket
     String message;                //message send to the server
     String MESSAGE;                //capitalized message read from the server
+    private Peer peer;
+    private Peer neighborPeer;
 
-    public void Client() {}
+    //this is getting the host and neighbor Peer
+    public void Client(Peer peer, Peer neighborPeer) {
+        this.peer = peer;
+        this.neighborPeer = neighborPeer;
+    }
 
     void run() {
         try {

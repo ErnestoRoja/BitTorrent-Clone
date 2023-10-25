@@ -1,4 +1,4 @@
-package main.java.com.bittorrent.message;
+package com.bittorrent.message;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -183,6 +183,7 @@ public class MessageCreator {
         return message;
     }
 
+
     // type 6
     // payload consts of a 4 byte piece index field
     public static byte[] requestMessage(int index) throws IOException {
@@ -215,6 +216,7 @@ public class MessageCreator {
 
 
         return message;
+
     }
 
     // type 7

@@ -1,5 +1,6 @@
-package main.java.com.bittorrent.server;
+package com.bittorrent.server;
 
+import com.bittorrent.peer.Peer;
 import java.net.*;
 import java.io.*;
 import java.nio.*;
@@ -9,10 +10,21 @@ import java.util.*;
 public class Server {
 
     private static final int sPort = 8000;   //The server will be listening on this port number
+    private Peer peer;
 
+    public Server(Peer peer){
+        this.peer = peer;
+    }
     public static void main(String[] args) throws Exception {
         System.out.println("The server is running.");
-        ServerSocket listener = new ServerSocket(sPort);
+        ServerSocket listener = null;
+        try{
+            listener = new ServerSocket(sPort);
+        }catch (IOException e) {
+            System.err.println("Couldn't start Server");
+            e.printStackTrace();
+        }
+
         int clientNum = 1;
         try {
             while (true) {
