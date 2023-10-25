@@ -31,4 +31,3 @@ public class WritingLog {
         System.out.println(currentTimeString);
     }
 }
-
