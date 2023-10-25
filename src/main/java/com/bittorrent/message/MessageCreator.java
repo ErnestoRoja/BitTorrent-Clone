@@ -137,16 +137,24 @@ public class MessageCreator {
         ByteBuffer messageLengthBuffer = ByteBuffer.allocate(4);
         messageLengthBuffer.putInt(lengthNum);
 
+        // Obtain the byte array representation of the messageLengthBuffer.
         messageLength = messageLengthBuffer.array();
 
+        // Copy the bytes from the messageLength array to the message array starting from index 0 with a length of 4.
         System.arraycopy(messageLength, 0, message, 0, 4);
+
+        // Copy the bytes from the messageType array to the message array starting from index 4 with a length of 1.
         System.arraycopy(messageType, 0, message, 4, 1);
+
+        // Copy the bytes from the payload array to the message array starting from index 5 with a length of payload.length.
         System.arraycopy(payload, 0, message, 5, payload.length);
 
         return message;
     }
 
     // type = 5
+    // bitfield Message have a bitfield as its payload. Each bit in
+    // the bitfield payload represents whether the peer has the corresponding piece or not.
     public static byte[] bitfieldMessage(BitSet bitfieldMessage) throws IOException {
         byte[] message = new byte[32]; // error message length to be determined later
         byte[] messageLength = new byte[4];      
@@ -163,7 +171,7 @@ public class MessageCreator {
 
 
     // type 6
-    // payload consts of a 4 byte piece index field
+    // requests messages payload consists of a 4 byte piece index field
     public static byte[] requestMessage(int index) throws IOException {
         // total 9 bytes
         byte[] message = new byte[9];
@@ -185,12 +193,17 @@ public class MessageCreator {
         ByteBuffer messageLengthBuffer = ByteBuffer.allocate(4);
         messageLengthBuffer.putInt(lengthNum);
 
+        // Obtain the byte array representation of the messageLengthBuffer.
         messageLength = messageLengthBuffer.array();
 
+        // Copy the bytes from the messageLength array to the message array starting from index 0 with a length of 4.
         System.arraycopy(messageLength, 0, message, 0, 4);
-        System.arraycopy(messageType, 0, message, 4, 1);
-        System.arraycopy(payload, 0, message, 5, payload.length);
 
+        // Copy the bytes from the messageType array to the message array starting from index 4 with a length of 1.
+        System.arraycopy(messageType, 0, message, 4, 1);
+
+        // Copy the bytes from the payload array to the message array starting from index 5 with a length of payload.length.
+        System.arraycopy(payload, 0, message, 5, payload.length);
 
 
         return message;
@@ -218,19 +231,28 @@ public class MessageCreator {
         lengthNum += indexByteArray.length;
         lengthNum += content.length;
 
-
-
+        // Allocate a new byte buffer with a capacity of 4 bytes.
         ByteBuffer messageLengthBuffer = ByteBuffer.allocate(4);
+
+        // Put the lengthNum value into the buffer as a 4-byte integer.
         messageLengthBuffer.putInt(lengthNum);
 
+        // Create a byte array to store the message with a length of lengthNum + 4 bytes.
         byte[] message = new byte[lengthNum + 4];
 
-
+        // Get the byte array from the messageLengthBuffer.
         messageLength = messageLengthBuffer.array();
 
+        // Copy the bytes from the messageLength array to the message array starting from index 0 with a length of 4.
         System.arraycopy(messageLength, 0, message, 0, 4);
+
+        // Copy the bytes from the messageType array to the message array starting from index 4 with a length of 1.
         System.arraycopy(messageType, 0, message, 4, 1);
+
+        // Copy the bytes from the indexByteArray array to the message array starting from index 5 with a length of indexByteArray.length.
         System.arraycopy(indexByteArray, 0, message, 5, indexByteArray.length);
+
+        // Copy the bytes from the content array to the message array starting from index 9 with a length of content.length.
         System.arraycopy(content, 0, message, 9, content.length);
 
 
