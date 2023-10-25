@@ -135,9 +135,35 @@ public class MessageCreator {
     
     // have message type 4
     // implement after piece type is done
-    public static byte[] haveMessage() throws IOException {
+    public static byte[] haveMessage(int index) throws IOException {
+        byte[] message = new byte[9];
+        byte[] messageLength = new byte[4];      
+        byte[] messageType = new byte[1];
+
+        messageType[0] = 6;
+
+        int lengthNum = messageType.length;
+
+        // getting the payload length amount 
+        // and turning it into a byte array
+        ByteBuffer indexBuffer = ByteBuffer.allocate(4);
+        indexBuffer.putInt(index);
+        byte[] payload = indexBuffer.array();
+        lengthNum += payload.length;
         
-        return null;
+        
+        ByteBuffer messageLengthBuffer = ByteBuffer.allocate(4);
+        messageLengthBuffer.putInt(lengthNum);
+
+        messageLength = messageLengthBuffer.array();
+        
+        System.arraycopy(messageLength, 0, message, 0, 4);
+        System.arraycopy(messageType, 0, message, 4, 1);
+        System.arraycopy(payload, 0, message, 5, payload.length);
+
+
+
+        return message;
     }
 
     // type = 5 
@@ -263,6 +289,11 @@ public class MessageCreator {
             byte[] unchokeMessage = MessageCreator.unchokeMessage();
             System.out.println(Arrays.toString(unchokeMessage));
     
+            // Test have message
+            System.out.println("Have message test");
+            byte[] haveMessage = messageCreator.haveMessage(1);
+            System.out.println(Arrays.toString(haveMessage));
+
             // Test request message
             System.out.println("Request message test");
             byte[] requestMessage = messageCreator.requestMessage(1);
