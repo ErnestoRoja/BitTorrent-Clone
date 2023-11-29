@@ -60,6 +60,14 @@ public class Peer {
         //Here we calculate the number of pieces in the file
         double result = (double)this.fileSize/this.pieceSize;
         this.numPieces = (int)Math.ceil(result);
+
+        //Storing the data of the file in Common.cfg
+        InputStream input2 = classLoader.getResourceAsStream(fileName);
+        try {
+            this.file = input2.readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void parsePeerInfoConfig() {
@@ -124,13 +132,11 @@ public class Peer {
         try {
             // Create a file within the peer's directory with the specified fileName.
             File filePath = new File(directory, fileName);
-            filePath.createNewFile();
             fileOutputStream = new FileOutputStream(filePath);
 
             // Write data to the file.
-            for (int i = 0; i < numPieces; i++) {
-                fileOutputStream.write(file[i]);
-            }
+            fileOutputStream.write(file);
+
         } catch (FileNotFoundException fileNotFound) {
             System.out.println("FileNotFoundException caught file is either a directory or does not exist.");
             fileNotFound.printStackTrace();
@@ -158,5 +164,6 @@ public class Peer {
         System.out.println();
         // Test for the PeerInfo config parser
         test.parsePeerInfoConfig();
+        test.peerDirectory();
     }
 }
