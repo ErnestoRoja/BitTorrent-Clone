@@ -60,6 +60,14 @@ public class Peer {
         //Here we calculate the number of pieces in the file
         double result = (double)this.fileSize/this.pieceSize;
         this.numPieces = (int)Math.ceil(result);
+
+        //Storing the data of the file in Common.cfg
+        InputStream input2 = classLoader.getResourceAsStream(fileName);
+        try {
+            this.file = input2.readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void parsePeerInfoConfig() {
@@ -93,6 +101,9 @@ public class Peer {
                     else
                         this.hasFile = false;
                     System.out.println(this.peerID + " " + this.hostName + " " + this.listeningPort + " " + this.hasFile);
+
+                    //create the directory for the peer
+                    peerDirectory();
                 }
                 else {
                     throw new IllegalArgumentException("PeerInfo config file is not formatted properly!");
@@ -108,8 +119,9 @@ public class Peer {
         // Initialize fileOutputStream to null to ensure it can be closed safely in the 'finally' block.
         FileOutputStream fileOutputStream = null;
 
+        String workingDir = System.getProperty("user.dir");
         //creates a subDirectory for the peer with it's peerID
-        String directoryPath = "/peer_" + Integer.toString(peerID);
+        String directoryPath = workingDir + "/peer_" + Integer.toString(peerID);
         File directory = new File(directoryPath);
 
         // Check if the directory exists. If not, create it.
@@ -122,14 +134,13 @@ public class Peer {
             }
         }
         try {
-            // Create a file within the peer's directory with the specified fileName.
-            File filePath = new File(directory, fileName);
-            filePath.createNewFile();
-            fileOutputStream = new FileOutputStream(filePath);
+            // Create a file within the peer's directory with the specified fileName if the peer contains file.
+            if(hasFile){
+                File filePath = new File(directory, fileName);
+                fileOutputStream = new FileOutputStream(filePath);
 
-            // Write data to the file.
-            for (int i = 0; i < numPieces; i++) {
-                fileOutputStream.write(file[i]);
+                // Write data to the file.
+                fileOutputStream.write(file);
             }
         } catch (FileNotFoundException fileNotFound) {
             System.out.println("FileNotFoundException caught file is either a directory or does not exist.");
