@@ -16,7 +16,8 @@ public class WritingLog {
         this.messageLogger = Logger.getLogger(Integer.toString(peerID));
 
         //Creating the log file directory for the peer
-        String directoryPath = "/log_peer_" + Integer.toString(peerID) + ".log";
+        String workingDir = System.getProperty("user.dir");
+        String directoryPath = workingDir + "/log_peer_" + Integer.toString(peerID) + ".log";
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             if (directory.mkdirs()) {
