@@ -1,7 +1,9 @@
 package com.bittorrent.peer;
 
+import com.bittorrent.message.MessageCreator;
+
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
 
 public class Peer {
 
@@ -18,8 +20,20 @@ public class Peer {
     public int peerID;
     public String hostName;
     public int listeningPort;
-    public boolean hasFile;
+    public int hasFile;
     public byte[] file;
+
+    // General attributes
+    public Hashtable<Integer, Peer> manager;
+    public BitSet bitField;
+    public Hashtable<Integer, BitSet> interestingPieces;
+    public ArrayList<Integer> interestedPeers;
+    public MessageCreator messageCreator;
+    public int bytesDownloaded;
+    public int piecesDownloaded;
+
+
+
     public Peer() {
 
     }
@@ -70,48 +84,28 @@ public class Peer {
         }
     }
 
-    public void parsePeerInfoConfig() {
-        // Used to locate the config file within the 'resources' folder provided by Maven
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream input = classLoader.getResourceAsStream("PeerInfo.cfg");
+    public void parsePeerInfoConfig(int peerID, String host, int port, int hasFile_) {
+        this.peerID = peerID;
+        this.hostName = host;
+        this.listeningPort = port;
+        this.hasFile = hasFile_;
+        this.manager = new Hashtable<Integer, Peer>();
+        this.interestingPieces = new Hashtable<Integer, BitSet>();
+        this.interestedPeers = new ArrayList<>();
+        this.bitField = new BitSet(numPieces);
+        this.messageCreator = new MessageCreator();
+        this.bytesDownloaded = 0;
+        this.piecesDownloaded = 0;
 
-        if (input == null) {
-            throw new IllegalArgumentException("PeerInfo.cfg file not found!");
+        if (hasFile_ == 1) {
+            this.bitField.set(0, numPieces, true);
+            this.piecesDownloaded = numPieces;
+        } else {
+            this.bitField.clear(0, numPieces);
         }
 
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Split the line into sections using the space in-between as a delimiter
-                String[] tokens = line.split(" ");
-
-                // Ensure that each line is formatted correctly
-                if (tokens.length == 4) {
-                    // First token
-                    this.peerID = Integer.parseInt(tokens[0]);
-                    // Second token
-                    this.hostName = tokens[1];
-                    // Third token
-                    this.listeningPort = Integer.parseInt(tokens[2]);
-                    // Fourth token, contains file is a boolean for true (1) or false (0)
-                    int containsFile = Integer.parseInt(tokens[3]);
-                    if (containsFile == 1)
-                        this.hasFile = true;
-                    else
-                        this.hasFile = false;
-                    System.out.println(this.peerID + " " + this.hostName + " " + this.listeningPort + " " + this.hasFile);
-
-                    //create the directory for the peer
-                    peerDirectory();
-                }
-                else {
-                    throw new IllegalArgumentException("PeerInfo config file is not formatted properly!");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        file = new byte[numPieces];
+        peerDirectory();
     }
 
     // Creates a subdirectory for each peer and saves the peer's files into the newly created folder.
@@ -135,7 +129,7 @@ public class Peer {
         }
         try {
             // Create a file within the peer's directory with the specified fileName if the peer contains file.
-            if(hasFile){
+            if(this.hasFile == 1){
                 File filePath = new File(directory, fileName);
                 fileOutputStream = new FileOutputStream(filePath);
 
@@ -163,11 +157,5 @@ public class Peer {
     }
 
     public static void main (String[] args) {
-        Peer test = new Peer();
-        // Test for the commonConfig parser
-        test.parseCommonConfig();
-        System.out.println();
-        // Test for the PeerInfo config parser
-        test.parsePeerInfoConfig();
     }
 }
