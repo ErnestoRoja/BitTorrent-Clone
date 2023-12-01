@@ -23,5 +23,12 @@ public class peerProcess {
             }
             scanner.close();
         }
+
+        int peerID = Integer.parseInt(arg[0]);
+
+        // making server for peer
+        Server server = new Server(peers.get(peerID));
+        Thread serverThread = new Thread(server);
+        serverThread.start();
     }
 }

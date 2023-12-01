@@ -156,6 +156,17 @@ public class Peer {
         }
     }
 
+
+    public void sendMessage(byte [] message, ObjectOutputStream outputStream, int targetPeerId){
+        outputStream.writeObject(message);
+        outputStream.flush();
+    }
+
+
+    /*
     public static void main (String[] args) {
     }
+
+*/
+
 }
