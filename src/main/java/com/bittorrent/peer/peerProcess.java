@@ -22,6 +22,13 @@ public class peerProcess {
                 peers.put(peer.peerID, peer);
             }
             scanner.close();
+
+            int peerID = Integer.parseInt(arg[0]);
+
+            WritingLog logger = new WritingLog(peers.get(peerID));
+
+            logger.setVariables(peerID, peers.get(peerID).bitField, peers.get(peerID).hostName, peers.get(peerID).listeningPort, peers.get(peerID).hasFile, peers.get(peerID).numOfPreferredNeighbors, peers.get(peerID).unchokingInterval, peers.get(peerID).optimisticUnchokingInterval, peers.get(peerID).fileName, peers.get(peerID).fileSize, peers.get(peerID).pieceSize, peers.get(peerID).numPieces);
+
         }
     }
 }
