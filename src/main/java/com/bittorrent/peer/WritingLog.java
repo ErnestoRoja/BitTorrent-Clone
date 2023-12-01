@@ -3,6 +3,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.logging.Logger;
 
 public class WritingLog {
@@ -36,6 +37,20 @@ public class WritingLog {
         return currentTime.format(formatter);
     }
 
+    public void setVariables(int peerID, BitSet bitfield, String hostName, int listeningPort, int hasFile_, int numOfPreferredNeighbors, int unchokingInterval, int optimisticUnchokingInterval, String fileName, int fileSize, int pieceSize, int numPieces){
+        messageLogger.info(getCurrentTime() + "Peer " + peerID + " has started its server and is setting variables: ");
+        messageLogger.info("Peer bitfield: " + bitfield.toString());
+        messageLogger.info("Peer hostname: "+ hostName);
+        messageLogger.info("Peer port number: " + listeningPort);
+        messageLogger.info("Peer contains file: "+ hasFile_);
+        messageLogger.info("Peer numbOfPreferredNeighbors: " + numOfPreferredNeighbors);
+        messageLogger.info("Peer unchoking interval: "+ unchokingInterval);
+        messageLogger.info("Peer optimistically unchoking interval: " + optimisticUnchokingInterval);
+        messageLogger.info("Peer download file name: "+ fileName);
+        messageLogger.info("Peer file size: "+ fileSize);
+        messageLogger.info("Peer piece size: "+ pieceSize);
+        messageLogger.info("Peer number of pieces: "+ numPieces);
+    }
     public void tcpConnect(int peerID, int peerID_2){
         messageLogger.info(getCurrentTime() + "Peer " + peerID + " makes a connection to Peer " + peerID_2 + ".");
     }
