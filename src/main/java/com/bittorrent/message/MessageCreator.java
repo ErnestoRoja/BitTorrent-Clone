@@ -312,7 +312,7 @@ public class MessageCreator {
     }
 
 
-    public static void main(String[] args){
-        testMessageCreator();
-    }
+//    public static void main(String[] args){
+//        testMessageCreator();
+//    }
 }

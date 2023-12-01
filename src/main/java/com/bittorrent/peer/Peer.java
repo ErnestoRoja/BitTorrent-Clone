@@ -3,7 +3,10 @@ package com.bittorrent.peer;
 import com.bittorrent.message.MessageCreator;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Hashtable;
+import java.util.Properties;
 
 public class Peer {
 
@@ -156,6 +159,22 @@ public class Peer {
         }
     }
 
+
+    public void sendMessage(byte [] message, ObjectOutputStream outputStream, int targetPeerId){
+        try{
+            outputStream.writeObject(message);
+            outputStream.flush();
+        }
+        catch (Exception e){
+            System.out.println("Caught Exception");
+        }
+    }
+
+
+    /*
     public static void main (String[] args) {
     }
+
+*/
+
 }
