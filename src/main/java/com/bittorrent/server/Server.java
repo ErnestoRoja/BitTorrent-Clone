@@ -1,6 +1,11 @@
 package com.bittorrent.server;
 
 
+import com.bittorrent.message.MessageHandler;
+import com.bittorrent.peer.Peer;
+
+import java.io.*;
+import java.net.*;
 
 public class Server implements Runnable {
 
@@ -19,17 +24,37 @@ public class Server implements Runnable {
 
     public void run(){
         ServerSocket listener = null;
-        listener = new ServerSocket(peer.portNumber);
+        try {
+            listener = new ServerSocket(peer.listeningPort);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         while(true){
-            socket = listener.accept();
+            try {
+                socket = listener.accept();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            out = new ObjectOutputStream(socket.getOutputStream());
-            out.flush();
+            try {
+                outputStream = new ObjectOutputStream(socket.getOutputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                outputStream.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            in = new ObjectInputStream(socket.getInputStream());
+            try {
+                inputStream = new ObjectInputStream(socket.getInputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             //create message handler this will handle dealing with incoming messages as well as sending responses to messages
-            MessageHandler handler = new MessageHandler(in, out, peer, socket); //(assuming we want peer and socket maybe not needed?)
+            MessageHandler handler = new MessageHandler(inputStream, outputStream, peer, socket); //(assuming we want peer and socket maybe not needed?)
 //                peer.setOut(out);
 
             //start handler on thread

@@ -1,7 +1,7 @@
-package edu.ufl.jjr.client;
+package com.bittorrent.client;
 
-import edu.ufl.jjr.peer.MessageHandler;
-import edu.ufl.jjr.peer.Peer;
+import com.bittorrent.message.MessageHandler;
+import com.bittorrent.peer.Peer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,7 +26,7 @@ public class Client{
     //link a peer and a target peer
     public void link(){
         try {
-            Socket socket = new Socket(targetPeer.hostName, targetPeer.portNumber);
+            Socket socket = new Socket(targetPeer.hostName, targetPeer.listeningPort);
 
             out = new ObjectOutputStream(socket.getOutputStream());
             out.flush();

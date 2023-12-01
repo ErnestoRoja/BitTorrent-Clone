@@ -1,10 +1,10 @@
 package com.bittorrent.message;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
+import com.bittorrent.peer.Peer;
 
-import java.io.ObjectInputStream;
+import java.io.*;
+import java.net.*;
+
 //import main.java.com.bittorrent.message.MessageCreator;
 // have compile message creator first
 
@@ -41,38 +41,38 @@ public class MessageHandler implements Runnable{
     */
 
     // Still needs further implementation.
-    public static readMessage(byte[] message) throws IOException {
+    public static void readMessage(byte[] message) throws IOException {
         int messageType = message[4];
-        System.out.println("Message Type: " + messageType)
+        System.out.println("Message Type: " + messageType);
 
 
         switch (messageType) {
             case 0: // choke
-                System.out.println("Choke Message")
+                System.out.println("Choke Message");
                 break;
             case 1: // unchoke
-                System.out.println("Unchoke Message")
+                System.out.println("Unchoke Message");
                 break;
             case 2: // interested
-                System.out.println("Interested Message")
+                System.out.println("Interested Message");
                 break;
             case 3: // not interested
-                System.out.println("Not interested Message")
+                System.out.println("Not interested Message");
                 break;
             case 4: // have
-                System.out.println("Have Message")
+                System.out.println("Have Message");
                 break;
             case 5: // bitfield
-                System.out.println("Bitfield Message")
+                System.out.println("Bitfield Message");
                 break;
             case 6: // request
-                System.out.println("Request Message")
+                System.out.println("Request Message");
                 break;
             case 7: // piece
-                System.out.println("Piece Message")
+                System.out.println("Piece Message");
                 break;
             default: // handshake message
-                System.out.println("default")
+                System.out.println("default");
 
         }
 
@@ -109,10 +109,15 @@ public class MessageHandler implements Runnable{
         // executed when thread.start() is run
         // peer send handshake message to target
         // if peer + neightbors DO NOT have file -> System.exit(0)
-        byte [] receivedMessage = (byte[])inputStream.readObject();
-        readMessage(receivedMessage)
+        try{
+            byte [] receivedMessage = (byte[])inputStream.readObject();
 
+            readMessage(receivedMessage);
 
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 }

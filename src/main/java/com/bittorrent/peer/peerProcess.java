@@ -1,9 +1,16 @@
 package com.bittorrent.peer;
+
+//import java.com.bittorrent.*;
+
+
+import com.bittorrent.server.Server;
+
 import java.io.*;
 import java.util.*;
 import java.util.Properties;
 
 public class peerProcess {
+
     public static void main(String arg[]) throws FileNotFoundException {
 
         Hashtable<Integer, Peer> peers = new Hashtable<Integer, Peer>();
@@ -23,11 +30,10 @@ public class peerProcess {
             }
             scanner.close();
 
-            int peerID = Integer.parseInt(arg[0]);
+        //    int peerID = Integer.parseInt(arg[0]);
 
-            WritingLog logger = new WritingLog(peers.get(peerID));
-
-            logger.setVariables(peerID, peers.get(peerID).bitField, peers.get(peerID).hostName, peers.get(peerID).listeningPort, peers.get(peerID).hasFile, peers.get(peerID).numOfPreferredNeighbors, peers.get(peerID).unchokingInterval, peers.get(peerID).optimisticUnchokingInterval, peers.get(peerID).fileName, peers.get(peerID).fileSize, peers.get(peerID).pieceSize, peers.get(peerID).numPieces);
+//            WritingLog logger = new WritingLog(peers.get(peerID));
+//            logger.setVariables(peerID, peers.get(peerID).bitField, peers.get(peerID).hostName, peers.get(peerID).listeningPort, peers.get(peerID).hasFile, peers.get(peerID).numOfPreferredNeighbors, peers.get(peerID).unchokingInterval, peers.get(peerID).optimisticUnchokingInterval, peers.get(peerID).fileName, peers.get(peerID).fileSize, peers.get(peerID).pieceSize, peers.get(peerID).numPieces);
 
         }
 
